@@ -106,7 +106,7 @@
     const modules = {
       m1: { naam: 'Module 1: Verkeersborden', icoon: '🛑' },
       m2: { naam: 'Module 2: Dode Hoek & Zicht', icoon: '🚛' },
-      m3: { naam: 'Module 3: Fietsen in Groep', icoon: '🚴‍♂️' },
+      m3: { naam: 'Module 3: Fietsers in Groep', icoon: '🚴‍♂️' },
       m4: { naam: 'Module 4: Noodsituaties', icoon: '🚑' },
       remedie: { naam: 'Remediëring: Foute Vragen', icoon: '✍️' }
     };
@@ -137,14 +137,14 @@
     `;
 
     const theorieM3 = `
-      <h3 class="text-2xl font-black mb-4 text-teal-800 uppercase">🧠 Theorie: Fietsen in Groep</h3>
+      <h3 class="text-2xl font-black mb-4 text-teal-800 uppercase">🧠 Theorie: Fietsers in Groep</h3>
       <ul class="text-left text-sm sm:text-base space-y-3 font-medium text-slate-700">
         <li>👉 Buiten de bebouwde kom mag je met <strong>maximaal 2</strong> naast elkaar fietsen.</li>
         <li>👉 Komt er een tegenligger aan? Of wil er een auto achter jullie inhalen? Dan <strong>moet je achter elkaar (ritsen)</strong> gaan rijden!</li>
         <li>👉 Steek altijd duidelijk je arm uit als je van richting wil veranderen.</li>
         <li>👉 Je GSM vasthouden in je hand tijdens het fietsen is <strong>streng verboden</strong>.</li>
       </ul>
-      <img src="fietsers in groep. png" alt="Fietsen in groep" class="w-full max-w-sm mx-auto mt-6 rounded-xl shadow-md border-2 border-slate-200" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200?text=Foto+hier+plaatsen';">
+      <img src="fietsers in groep.png" alt="Fietsen in groep" class="w-full max-w-sm mx-auto mt-6 rounded-xl shadow-md border-2 border-slate-200" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200?text=Foto+hier+plaatsen';">
     `;
 
     const theorieM4 = `
@@ -199,7 +199,7 @@
       { module: modules.m2, q: "Hoe weet je 100% zeker dat een vrachtwagenchauffeur jou heeft opgemerkt?", a: "Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", opties: ["Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", "Als je luid genoeg belt met je fietsbel.", "Als de richtingaanwijzer van de vrachtwagen aan staat."] },
       { module: modules.m2, q: "Waar of Niet Waar: Alleen vrachtwagens hebben een dode hoek, gewone auto's en bussen hebben dit niet.", a: "Niet Waar (Elk voertuig heeft dode hoeken).", opties: ["Waar", "Niet Waar (Elk voertuig heeft dode hoeken)."] },
 
-      // === MODULE 3: FIETSEN IN GROEP ===
+      // === MODULE 3: FIETSERS IN GROEP ===
       { type: 'info', module: modules.m3, text: theorieM3 },
       { module: modules.m3, q: "Je fietst met je klas in een grote groep. Mogen jullie gezellig met drie naast elkaar fietsen?", a: "Nee, je mag maximaal met twee naast elkaar fietsen.", opties: ["Nee, je mag maximaal met twee naast elkaar fietsen.", "Ja, als de weg breed genoeg is mag dat altijd.", "Ja, maar alleen buiten de bebouwde kom."] },
       { module: modules.m3, q: "Waar of Niet Waar: Als fietser moet je altijd duidelijk je arm uitsteken wanneer je van richting wil veranderen.", a: "Waar", opties: ["Waar", "Niet Waar (dat is niet verplicht)"] },
@@ -214,7 +214,7 @@
       { module: modules.m4, q: "Welk telefoonnummer bel je als iemand dringend een ziekenwagen nodig heeft?", a: "112", opties: ["112", "101", "100"] },
       { module: modules.m4, q: "Waarom is het heel erg handig om in geval van nood te bellen via de App '112 BE'?", a: "Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", opties: ["Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", "Omdat je met de app gratis belt, en via het gewone nummer moet je betalen.", "Omdat je via de app een videocall kan starten met de dokter."] },
       { module: modules.m4, q: "Waar of Niet Waar: Iemand heeft net een zware val gemaakt en klaagt over dorst. Je mag hem gerust een grote slok water geven.", a: "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn).", opties: ["Waar", "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn)."] },
-      { module: modules.m4, q: "Je hebt 112 gebeld. Wat is de allerbelangrijkste informatie die de operator moet weten?", a: "Waar je precies bent (straat, gemeente of een herkenningspunt).", opties: ["Waar je precies bent (straat, gemeente of een herkenningspunt).", "Je eigen naam en achternaam.", "Welke kleur fiets het slachtoffer heeft."] },
+      { module: modules.m4, q: "Je hebt 112 gebeld. Wat is de allerbelangrijkste informatie die de operator moet weten?", a: "Waar je precies bent (straat, gemeente of een herkenningspunt).", opties: ["Waar je precies bent (straat, gemeente of een herkenningspunt).", "Je eigen naam en achternaam.", "Welke kleur fiets het schlachtoffer heeft."] },
       { module: modules.m4, q: "Waar of Niet Waar: Je mag een gewonde fietser die op de straat ligt altijd meteen opheffen en naar de stoep sleuren.", a: "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is).", opties: ["Waar", "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is)."] },
       { module: modules.m4, q: "Een fietser is hard gevallen en klaagt over pijn in zijn nek. Wat doe je?", a: "Nee, laat hem liggen tot de ambulance er is. (Tenzij er brand of levensgevaar is).", opties: ["Nee, laat hem liggen tot de ambulance er is. (Tenzij er brand of levensgevaar is).", "Ja, hij ligt in de weg voor de auto's dus sleep hem direct naar de kant.", "Ja, trek hem recht en laat hem een stukje wandelen."] }
     ];
