@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veilig op Weg: De Verkeersexpeditie</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    #scroll-container { scrollbar-width: none; -ms-overflow-style: none; }
+    #scroll-container::-webkit-scrollbar { display: none; }
+    .animate-ride-across { animation: rideAcross 5s linear forwards; }
+    @keyframes rideAcross { 0% { transform: translateX(-100vw); } 100% { transform: translateX(100vw); } }
+    .answ-btn-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    .animate-shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(4px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center bg-gradient-to-br from-slate-200 via-gray-100 to-slate-300 sm:p-4">
 
+  <div id="spiek-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-sm flex justify-center items-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full h-[85vh] flex flex-col overflow-hidden shadow-2xl border-4 border-yellow-500">
+       <div class="p-4 bg-slate-800 text-white flex justify-between items-center shrink-0">
+          <h3 class="font-black text-yellow-400">📜 De 7 Gouden Regels</h3>
+          <button onclick="toggleSpiekbriefje()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-bold transition-colors shadow-md">Sluiten ❌</button>
+       </div>
+       <div class="overflow-auto p-6 bg-slate-50 flex-grow text-slate-700 text-sm leading-relaxed space-y-4">
+          <p><strong>1. Wandelen:</strong> Geen voetpad? Wandel <strong>links</strong> van de weg tegen het verkeer in.</p>
+          <p><strong>2. Fietsen in groep:</strong> Buiten de bebouwde kom mag je met 2 naast elkaar. Komt er een tegenligger of wil er iemand inhalen? Dan <strong>moet</strong> je achter elkaar gaan rijden.</p>
+          <p><strong>3. Borden herkennen:</strong> Driehoek = Gevaar/Voorrang. Rond met rode rand = Verbod. Rond blauw = Verplicht. Vierkant blauw = Aanwijzing.</p>
+          <p><strong>4. Smartphone:</strong> Je GSM vasthouden op de fiets is streng verboden en kost je een zware boete.</p>
+          <p><strong>5. Dode Hoek:</strong> Sta <strong>nooit</strong> rechts naast een vrachtwagen. Blijf er ruim achter en zoek de chauffeur in zijn spiegel.</p>
+          <p><strong>6. Oogcontact:</strong> Voorrang moet je krijgen, niet blindelings nemen. Kijk de chauffeur in de ogen!</p>
+          <p><strong>7. Ongeval:</strong> 1. Veiligheid (fluohesje aan). 2. Bel <strong>112</strong>. 3. Verplaats een gewonde nooit, behalve bij brandgevaar.</p>
+       </div>
+    </div>
+  </div>
+
+  <div class="w-full max-w-3xl h-full sm:h-[95vh] sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-slate-300 relative bg-white">
+    
+    <div id="start-scherm" class="flex-grow flex flex-col h-full p-8 text-center items-center justify-center bg-slate-50 relative">
+        <div class="text-7xl mb-6 animate-bounce">🚦</div>
+        <h1 class="text-4xl font-black text-slate-800 mb-4 uppercase italic">Veilig op Weg</h1>
+        <div class="bg-white p-6 rounded-2xl shadow-xl border-l-8 border-yellow-500 text-left mb-8 max-w-lg text-slate-700">
+            <p class="mb-3 font-bold">Het verkeer is een jungle, ben jij klaar om te overleven?</p>
+            <p class="text-sm mb-3">Tijdens deze expeditie van zo'n 40 minuten doorlopen we 8 intensieve modules. Van verkeersborden en groepsregels tot de gevaarlijke dode hoek.</p>
+            <p class="text-sm font-bold text-yellow-600">Lees de theorie grondig, scoor punten met de vragen en behaal je diploma!</p>
+        </div>
+        <button onclick="startSpel()" class="bg-slate-800 text-white font-black py-4 px-12 rounded-full shadow-lg uppercase tracking-widest hover:scale-105 transition-transform text-xl border-b-4 border-yellow-500">Start de Expeditie</button>
+    </div>
+
+    <div id="etappe-scherm" class="hidden absolute inset-0 z-50 bg-slate-900/95 flex flex-col justify-center items-center text-center p-6 backdrop-blur-md">
+      <h2 class="text-4xl font-black text-white mb-2 italic" id="etappe-titel">Nieuwe Module!</h2>
+      <p class="text-3xl text-yellow-400 mb-10 font-bold" id="volgende-land-naam">Module Naam</p>
+      <div class="w-full overflow-hidden relative h-24 mb-10"><div class="text-7xl absolute bottom-0 left-0 animate-ride-across">🚲💨</div></div>
+      <button onclick="startVolgendeEtappe()" class="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-black py-4 px-12 rounded-full shadow-2xl uppercase text-xl transition-colors">Start Module 🚦</button>
+    </div>
+
+    <div id="game-ui" class="hidden flex-col h-full w-full">
+      <div id="game-header" class="p-3 text-white flex flex-col gap-2 shrink-0 transition-colors duration-500 bg-slate-800">
+        <div class="flex justify-between items-center px-1">
+          <div class="flex items-center space-x-2"><span id="land-icoon" class="text-3xl">📚</span><span class="font-black text-xs sm:text-sm uppercase" id="land-naam">Intro</span></div>
+          <div class="flex items-center space-x-3">
+            <button onclick="toggleSpiekbriefje()" class="bg-slate-100 text-slate-900 px-3 py-1 rounded-lg font-black text-xs border-b-2 border-slate-300 hover:bg-white transition-colors">REGELS 📜</button>
+            <div class="bg-black/40 px-3 py-1 rounded-lg font-black text-yellow-400 border border-yellow-500/30">
+              ⭐ Score: <span id="score-weergave">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="w-full bg-black/30 rounded-full h-3 overflow-hidden"><div id="progress-bar" class="bg-yellow-400 h-full transition-all" style="width: 0%"></div></div>
+      </div>
+
+      <div id="scroll-container" class="flex-grow overflow-y-auto p-4 flex flex-col items-center bg-slate-50">
+        <div id="verhaal-tekst" class="text-center text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest"></div>
+        <div id="vraag-container" class="mb-4 w-full flex justify-center"></div>
+        <div id="antwoord-container" class="w-full max-w-md grid gap-2"></div>
+        <div id="feedback-antwoord" class="hidden w-full max-w-md p-4 rounded-xl text-center font-black text-sm mt-4 border-4"></div>
+      </div>
+
+      <div class="p-4 bg-white border-t flex justify-center shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+        <button id="action-btn" onclick="volgendeActie()" class="w-full max-w-md bg-slate-200 text-slate-400 py-4 rounded-2xl font-black uppercase text-sm transition-all" disabled>Kies een antwoord...</button>
+      </div>
+    </div>
+
+    <div id="bericht-scherm" class="hidden flex-grow flex-col h-full w-full items-center justify-center p-8 text-center overflow-y-auto bg-slate-50">
+        <div id="eind-emoji" class="text-7xl mb-4">🏆</div>
+        <h2 id="eind-titel" class="text-4xl font-black text-slate-800 mb-2 italic uppercase">Expeditie Voltooid!</h2>
+        <div class="bg-slate-800 text-white p-8 rounded-[3rem] mb-6 border-b-8 border-yellow-500 w-full max-w-sm shadow-xl">
+            <div class="text-7xl font-black text-yellow-400 mb-2"><span id="eind-score-getal">0</span>%</div>
+            <p id="eind-status" class="text-xs opacity-70 uppercase tracking-widest font-bold">Jouw Score</p>
+        </div>
+        
+        <div class="bg-white border-l-8 border-blue-500 p-4 text-left mb-6 max-w-sm rounded-r-xl shadow-md">
+            <p class="font-black text-blue-800 uppercase text-xs mb-1">📸 Screenshot Verplicht</p>
+            <p class="text-xs text-slate-600 leading-tight">Maak een screenshot van dit eindscherm en voeg dit toe aan je opdracht in Classroom.</p>
+        </div>
+
+        <div class="flex flex-col gap-3 w-full max-w-sm">
+            <button id="remedie-btn" onclick="startRemediering()" class="hidden bg-red-500 hover:bg-red-600 text-white font-black py-4 px-10 rounded-full uppercase tracking-widest shadow-lg animate-pulse transition-colors">Start Remediëring ✍️</button>
+            <button onclick="window.location.reload()" class="bg-slate-300 hover:bg-slate-400 text-slate-800 font-black py-4 px-10 rounded-full uppercase tracking-widest transition-colors">Opnieuw Starten</button>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    const modules = {
+      m1: { code: 'm1', naam: 'Module 1: Verkeersborden', icoon: '🛑', bg: 'bg-red-600' },
+      m2: { code: 'm2', naam: 'Module 2: Voorrangsregels', icoon: '⚠️', bg: 'bg-orange-600' },
+      m3: { code: 'm3', naam: 'Module 3: Plaats op de weg', icoon: '🛣️', bg: 'bg-teal-600' },
+      m4: { code: 'm4', naam: 'Module 4: Fietsen in Groep', icoon: '🚴‍♂️', bg: 'bg-emerald-600' },
+      m5: { code: 'm5', naam: 'Module 5: Zichtbaarheid', icoon: '💡', bg: 'bg-blue-600' },
+      m6: { code: 'm6', naam: 'Module 6: De Dode Hoek', icoon: '🚛', bg: 'bg-gray-800' },
+      m7: { code: 'm7', naam: 'Module 7: Afleiding & Gedrag', icoon: '📱', bg: 'bg-purple-600' },
+      m8: { code: 'm8', naam: 'Module 8: Noodsituaties', icoon: '🚑', bg: 'bg-rose-600' }
+    };
+
+    // MEGA VRAGENLIJST (40+ items voor een lange lesuur)
+    const alleVragenData = [
+      // MODULE 1: BORDEN
+      { type: 'info', module: modules.m1, thema: 'De Vormen van Borden', inhoud: `Gevaarsborden zijn altijd een <strong>driehoek met een rode rand</strong>. Verbodsborden zijn <strong>rond met een rode rand</strong>. Verplichte borden (zoals een verplicht fietspad) zijn <strong>rond en blauw</strong>. Aanwijzingsborden (zoals een eenrichtingsstraat) zijn <strong>vierkant of rechthoekig en blauw</strong>.` },
+      { type: 'mc', module: modules.m1, q: "Je ziet een rond, rood bord met een witte horizontale streep in het midden. Wat betekent dit?", a: "Verboden toegang (eenrichtingsverkeer)", opties: ["Verboden toegang (eenrichtingsverkeer)", "Verplicht stoppen", "Einde van de bebouwde kom"] },
+      { type: 'mc', module: modules.m1, q: "Wat betekent een rond, blauw bord met een witte fiets erop?", a: "Verplicht fietspad", opties: ["Verplicht fietspad", "Fietsen toegestaan, maar niet verplicht", "Einde fietspad"] },
+      { type: 'mc', module: modules.m1, q: "Je ziet een driehoekig bord met een rode rand en een fietser erop. Wat betekent dit?", a: "Gevaar: fietsers op de rijbaan of een oversteekplaats", opties: ["Verboden voor fietsers", "Verplicht fietspad", "Gevaar: fietsers op de rijbaan of een oversteekplaats"] },
+      { type: 'mc', module: modules.m1, q: "Wat is het verschil tussen een rond blauw bord (witte fiets) en een vierkant blauw bord (witte fiets)?", a: "Rond is verplicht fietspad, vierkant is een aanbevolen fietspad", opties: ["Er is geen verschil", "Rond is voor snelle e-bikes, vierkant voor gewone", "Rond is verplicht fietspad, vierkant is een aanbevolen fietspad"] },
+      { type: 'tf', module: modules.m1, q: "Stelling: Een achthoekig rood bord betekent STOP.", a: "Waar", getoondeTerm: "Waar of Niet Waar?" },
+
+      // MODULE 2: VOORRANG
+      { type: 'info', module: modules.m2, thema: 'Wie mag er eerst?', inhoud: `Op een kruispunt zónder borden of lichten geldt: <strong>Voorrang van rechts</strong>. Ook voor fietsers! Een omgekeerde driehoek met rode rand (haaientanden) betekent: jij moet voorrang verlenen. Komt een fietser van rechts uit een veldweg of oprit? Dan heeft die GEEN voorrang, want dat is een 'aardeweg'.` },
+      { type: 'mc', module: modules.m2, q: "Er staan geen borden op het kruispunt. Een auto komt van links, een andere fietser van rechts. Wie mag eerst?", a: "De fietser van rechts", opties: ["Ik mag eerst", "De fietser van rechts", "De auto van links"] },
+      { type: 'mc', module: modules.m2, q: "Je fietst en ziet witte haaientanden op de grond voor je. Wat doe je?", a: "Je moet voorrang verlenen aan de kruisende weg", opties: ["Je hebt voorrang", "Je moet voorrang verlenen aan de kruisende weg", "Je mag hier niet verder fietsen"] },
+      { type: 'tf', module: modules.m2, q: "Stelling: Als je op een rotonde fietst (op de rotonde zelf), heb jij voorrang op het verkeer dat de rotonde wil oprijden.", a: "Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m2, q: "Een auto wil een oprit of parkeerplaats afrijden en komt van rechts. Heeft deze auto voorrang van rechts?", a: "Nee, een oprit is een uitrit, je moet voorrang verlenen aan iedereen", opties: ["Ja, voorrang van rechts geldt altijd", "Nee, een oprit is een uitrit, je moet voorrang verlenen aan iedereen", "Enkel als hij zijn richtingaanwijzer aanzet"] },
+
+      // MODULE 3: PLAATS OP DE WEG
+      { type: 'info', module: modules.m3, thema: 'Waar hoor jij thuis?', inhoud: `Fietsers rijden op het fietspad. Is er geen fietspad? Dan fiets je <strong>rechts op de rijbaan</strong>. Voetgangers zonder voetpad wandelen altijd aan de <strong>linkerkant</strong> van de weg, tegen het verkeer in! In een fietsstraat is de maximumsnelheid 30 km/u en mogen auto's fietsers NOOIT inhalen.` },
+      { type: 'mc', module: modules.m3, q: "Je fietst op een gewone weg zonder fietspad. Waar fiets je?", a: "Zo ver mogelijk rechts op de rijbaan", opties: ["In het midden van de weg", "Zo ver mogelijk links op de rijbaan", "Zo ver mogelijk rechts op de rijbaan"] },
+      { type: 'mc', module: modules.m3, q: "Je wandelt met je vrienden naar huis. Er is nergens een voetpad. Waar wandel je?", a: "Links op de rijbaan, achter elkaar", opties: ["Rechts op de rijbaan", "Links op de rijbaan, achter elkaar", "In het midden van de weg"] },
+      { type: 'tf', module: modules.m3, q: "Stelling: In een fietsstraat mag een auto een fietser inhalen als de fietser heel traag rijdt.", a: "Niet Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m3, q: "Je fietst op het trottoir (voetpad) in de stad. Mag dat?", a: "Nee, tenzij je jonger bent dan 10 jaar", opties: ["Ja, als de weg te druk is", "Nee, tenzij je jonger bent dan 10 jaar", "Ja, zolang je voetgangers niet hindert"] },
+
+      // MODULE 4: FIETSEN IN GROEP
+      { type: 'info', module: modules.m4, thema: 'Regels voor de Groep', inhoud: `Ben je met minder dan 15 fietsers? Dan ben je geen officiële groep en volg je de gewone regels. Buiten de bebouwde kom mag je met 2 naast elkaar. MAAR: als er een tegenligger komt, of er wil een auto achterop inhalen, móét je achter elkaar ('en file') gaan rijden.` },
+      { type: 'mc', module: modules.m4, q: "Jullie fietsen met 5 vrienden buiten de bebouwde kom met twee naast elkaar. Er komt een tractor uit de tegenovergestelde richting. Wat doe je?", a: "We gaan direct achter elkaar rijden", opties: ["We blijven naast elkaar, fietsers hebben voorrang", "We gaan direct achter elkaar rijden", "We stoppen allemaal aan de rechterkant"] },
+      { type: 'tf', module: modules.m4, q: "Stelling: Als je met 10 fietsers bent, is een speciale wegkapitein met een bordje verplicht.", a: "Niet Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m4, q: "Binnen de bebouwde kom, mag je daar met 2 naast elkaar fietsen?", a: "Ja, zolang je tegenliggers niet hindert", opties: ["Nee, binnen de bebouwde kom moet je altijd achter elkaar", "Ja, zolang je tegenliggers niet hindert", "Ja, en auto's moeten altijd achter je blijven"] },
+
+      // MODULE 5: ZICHTBAARHEID
+      { type: 'info', module: modules.m5, thema: 'Licht in het duister', inhoud: `Als het donker wordt (of als het hard regent/mist), MOETEN je lichten aan. <strong>Wit of geel vooraan, rood achteraan</strong>. Ook de reflectoren op je pedalen, in je wielen en voor/achteraan zijn wettelijk verplicht op een stadsfiets. Fluohesjes zijn niet verplicht, maar redden levens!` },
+      { type: 'mc', module: modules.m5, q: "Wanneer is het aanzetten van je fietslichten verplicht?", a: "Tussen het vallen van de avond en het aanbreken van de dag, en bij slecht zicht", opties: ["Alleen als er geen straatverlichting is", "Tussen het vallen van de avond en het aanbreken van de dag, en bij slecht zicht", "Altijd, ook overdag"] },
+      { type: 'mc', module: modules.m5, q: "Mogen je fietslichten knipperen?", a: "Ja, knipperende lichten zijn tegenwoordig toegestaan", opties: ["Nee, ze moeten altijd continu branden", "Enkel het achterlicht mag knipperen", "Ja, knipperende lichten zijn tegenwoordig toegestaan"] },
+      { type: 'tf', module: modules.m5, q: "Stelling: Een sportfiets (koersfiets) heeft geen reflectoren op de pedalen of in de wielen nodig overdag.", a: "Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m5, q: "Wat is het effect van een fluohesje 's nachts in de koplampen van een auto?", a: "Je bent zichtbaar vanop 150 meter, in plaats van 20 meter in donkere kledij", opties: ["Je bent zichtbaar vanop 150 meter, in plaats van 20 meter in donkere kledij", "Het helpt niet echt, lichten zijn belangrijker", "Het verblindt de bestuurder"] },
+
+      // MODULE 6: DE DODE HOEK
+      { type: 'info', module: modules.m6, thema: 'De Gevaarlijkste Plek', inhoud: `Vrachtwagens, bussen en tractoren hebben grote "Dode Hoeken". Dit zijn plaatsen rondom het voertuig waar de chauffeur jou NIET kan zien, zelfs niet met zijn spiegels. De gevaarlijkste plek is <strong>rechts naast of rechts voor</strong> de vrachtwagen. Blijf er altijd RUIM achter.` },
+      { type: 'mc', module: modules.m6, q: "Je staat aan het rood licht. Een grote vrachtwagen staat naast je (links van jou). Hij wil naar rechts afslaan. Wat is de veiligste actie?", a: "Je stapt af en wacht of gaat ruim achter de vrachtwagen staan", opties: ["Je fietst snel door het rood", "Je blijft gewoon staan, hij moet voorrang geven", "Je stapt af en wacht of gaat ruim achter de vrachtwagen staan"] },
+      { type: 'mc', module: modules.m6, q: "Hoe kan je zelf controleren of jij NIET in de dode hoek staat?", a: "Als jij het gezicht van de chauffeur in zijn zijspiegel kunt zien", opties: ["Als je de richtingaanwijzer van de truck ziet", "Als jij het gezicht van de chauffeur in zijn zijspiegel kunt zien", "Als je de wielen van de vrachtwagen ziet"] },
+      { type: 'tf', module: modules.m6, q: "Stelling: Als vrachtwagens extra dodehoekspiegels hebben, hebben ze helemaal geen dode hoek meer en zien ze alles.", a: "Niet Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m6, q: "Een vrachtwagen stopt aan een zebrapad om jou te laten oversteken. Wat doe je?", a: "Zoek eerst oogcontact met de chauffeur voordat je oversteekt", opties: ["Steek blindelings zo snel mogelijk over", "Zoek eerst oogcontact met de chauffeur voordat je oversteekt", "Wandel er snel achterdoor"] },
+
+      // MODULE 7: AFLEIDING & GEDRAG
+      { type: 'info', module: modules.m7, thema: 'Focus en Hoffelijkheid', inhoud: `Een GSM vasthouden op de fiets is streng verboden (boete van meer dan 170 euro). Ook muziek luisteren doe je best op een zacht volume (of met 1 oortje). In het verkeer is <strong>oogcontact</strong> met andere bestuurders de beste manier om te communiceren en zeker te zijn dat ze je gezien hebben.` },
+      { type: 'mc', module: modules.m7, q: "Mag je je smartphone gebruiken op de fiets als deze in een vaste houder op je stuur zit?", a: "Ja, je mag hem gebruiken als GPS via een vaste houder, maar niet vasthouden", opties: ["Nee, het scherm mag nooit aanstaan", "Ja, je mag hem gebruiken als GPS via een vaste houder, maar niet vasthouden", "Ja, en je mag ook swipen en typen zolang hij in de houder zit"] },
+      { type: 'tf', module: modules.m7, q: "Stelling: Fietsen onder invloed van alcohol is niet strafbaar, want je bent geen autobestuurder.", a: "Niet Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m7, q: "Je hebt duidelijk voorrang op een kruispunt, maar de naderende auto lijkt niet te vertragen. Wat doe je?", a: "Je remt af en stopt, je eigen veiligheid gaat boven je recht op voorrang", opties: ["Je fietst door en roept naar de auto", "Je versnelt om voor de auto te zijn", "Je remt af en stopt, je eigen veiligheid gaat boven je recht op voorrang"] },
+      { type: 'mc', module: modules.m7, q: "Waarom is oogcontact maken met autobestuurders zo belangrijk?", a: "Het is de enige manier om zeker te weten of ze je hebben opgemerkt", opties: ["Het is de enige manier om zeker te weten of ze je hebben opgemerkt", "Omdat het beleefd is", "Omdat het wettelijk verplicht is in de wegcode"] },
+
+      // MODULE 8: NOODSITUATIES
+      { type: 'info', module: modules.m8, thema: 'Wat bij een ongeluk?', inhoud: `Als je getuige of slachtoffer bent van een ongeval: 1. Breng jezelf in <strong>veiligheid</strong> (trek fluohesje aan, ga in de berm staan). 2. Bel de hulpdiensten via <strong>112</strong>. 3. Verplaats een ernstig gewond slachtoffer NOOIT, om wervelletsels te voorkomen (tenzij er direct levensgevaar is zoals brand).` },
+      { type: 'mc', module: modules.m8, q: "Je ziet een ongeluk gebeuren. Wat is je allereerste actie?", a: "Zorgen voor veiligheid: waarschuw ander verkeer en trek een fluohesje aan", opties: ["Meteen naar het slachtoffer rennen", "Zorgen voor veiligheid: waarschuw ander verkeer en trek een fluohesje aan", "Direct beginnen reanimeren"] },
+      { type: 'mc', module: modules.m8, q: "Via welk nummer kun je in heel Europa gratis de spoedgevallen en brandweer bereiken?", a: "112", opties: ["101", "112", "911"] },
+      { type: 'tf', module: modules.m8, q: "Stelling: Als een slachtoffer op straat ligt met pijn aan de rug, moet je hem zo snel mogelijk naar de stoep dragen.", a: "Niet Waar", getoondeTerm: "Waar of Niet Waar?" },
+      { type: 'mc', module: modules.m8, q: "Wat vertel je als eerste aan de operator wanneer je 112 belt?", a: "De exacte locatie van het ongeval", opties: ["Wie er in fout was", "De exacte locatie van het ongeval", "Hoeveel auto's er in de file staan"] }
+    ];
+
+    let state = {
+      score: 0,
+      index: 0,
+      vragenLijst: [],
+      fouteVragen: [],
+      beantwoord: false,
+      isRemediering: false,
+      transitGezien: false
+    };
+
+    const UI = {
+      spiekModal: document.getElementById('spiek-modal'),
+      startScherm: document.getElementById('start-scherm'),
+      gameUI: document.getElementById('game-ui'),
+      etappeScherm: document.getElementById('etappe-scherm'),
+      volgendeLandNaam: document.getElementById('volgende-land-naam'),
+      berichtScherm: document.getElementById('bericht-scherm'),
+      landIcoon: document.getElementById('land-icoon'),
+      landNaam: document.getElementById('land-naam'),
+      gameHeader: document.getElementById('game-header'),
+      progress: document.getElementById('progress-bar'),
+      score: document.getElementById('score-weergave'),
+      verhaalTekst: document.getElementById('verhaal-tekst'),
+      vraagContainer: document.getElementById('vraag-container'),
+      antwoordContainer: document.getElementById('antwoord-container'),
+      fbBox: document.getElementById('feedback-antwoord'),
+      actieBtn: document.getElementById('action-btn')
+    };
+
+    function toggleSpiekbriefje() { UI.spiekModal.classList.toggle('hidden'); }
+    function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+
+    function startSpel() {
+      state.vragenLijst = [...alleVragenData];
+      state.index = 0;
+      state.score = 0;
+      UI.startScherm.classList.add('hidden');
+      UI.gameUI.classList.remove('hidden');
+      UI.gameUI.classList.add('flex');
+      laadVraag();
+    }
+
+    function laadVraag() {
+      state.beantwoord = false;
+      if (state.index >= state.vragenLijst.length) {
+        eindigSpel();
+        return;
+      }
+
+      let q = state.vragenLijst[state.index];
+      let vorigeQ = state.index > 0 ? state.vragenLijst[state.index - 1] : null;
+
+      if (vorigeQ && q.module.code !== vorigeQ.module.code && !state.isRemediering) {
+        if(!state.transitGezien) {
+            UI.etappeScherm.classList.remove('hidden');
+            UI.etappeScherm.classList.add('flex');
+            UI.volgendeLandNaam.innerText = q.module.naam;
+            return;
+        }
+      }
+      state.transitGezien = false;
+
+      UI.landIcoon.innerText = q.module.icoon;
+      UI.landNaam.innerText = q.module.naam;
+      UI.gameHeader.className = `p-3 text-white flex flex-col gap-2 shrink-0 transition-colors duration-500 ${q.module.bg}`;
+      UI.progress.style.width = `${(state.index / state.vragenLijst.length) * 100}%`;
+      
+      // LIVE SCORE UPDATE (x op totaal)
+      let totaalVragen = state.vragenLijst.filter(v => v.type !== 'info').length;
+      UI.score.innerText = `${state.score} / ${totaalVragen}`;
+
+      UI.fbBox.classList.add('hidden');
+      UI.vraagContainer.innerHTML = '';
+      UI.antwoordContainer.innerHTML = '';
+      UI.verhaalTekst.innerHTML = q.type === 'info' ? '' : 'Beantwoord de Vraag';
+
+      UI.actieBtn.disabled = true;
+
+      if (q.type === 'info') {
+        UI.vraagContainer.innerHTML = `
+          <div class="bg-white p-6 rounded-2xl border-l-8 border-yellow-400 w-full shadow-md text-left">
+            <h3 class="text-xl font-black text-slate-800 mb-3">${q.thema}</h3>
+            <p class="text-slate-600 leading-relaxed">${q.inhoud}</p>
+          </div>
+        `;
+        UI.actieBtn.disabled = false;
+        UI.actieBtn.innerText = "Ik begrijp het! 👉";
+        UI.actieBtn.className = "w-full max-w-md bg-yellow-500 hover:bg-yellow-600 text-slate-900 py-4 rounded-2xl font-black uppercase text-sm shadow-lg transition-colors";
+        state.beantwoord = true;
+      } 
+      else if (q.type === 'tf') {
+        UI.vraagContainer.innerHTML = `<h3 class="text-lg font-bold text-slate-800 text-center w-full bg-white p-4 rounded-xl shadow-sm border border-slate-200">${q.q}</h3>`;
+        ['Waar', 'Niet Waar'].forEach(opt => {
+          let btn = document.createElement('button');
+          btn.className = "bg-white p-4 rounded-xl border-2 border-slate-200 font-bold text-slate-700 answ-btn-hover transition-all uppercase";
+          btn.innerText = opt;
+          btn.onclick = () => selectAnswer(opt, btn, q);
+          UI.antwoordContainer.appendChild(btn);
+        });
+        UI.actieBtn.innerText = "Kies Waar of Niet Waar";
+        UI.actieBtn.className = "w-full max-w-md bg-slate-200 text-slate-400 py-4 rounded-2xl font-black uppercase text-sm";
+      }
+      else {
+        UI.vraagContainer.innerHTML = `<h3 class="text-lg font-bold text-slate-800 text-center w-full bg-white p-4 rounded-xl shadow-sm border border-slate-200">${q.q}</h3>`;
+        let displayOpties = shuffle([...q.opties]);
+        displayOpties.forEach(opt => {
+          let btn = document.createElement('button');
+          btn.className = "bg-white p-4 rounded-xl border-2 border-slate-200 font-bold text-slate-700 answ-btn-hover transition-all text-left text-sm leading-snug";
+          btn.innerText = opt;
+          btn.onclick = () => selectAnswer(opt, btn, q);
+          UI.antwoordContainer.appendChild(btn);
+        });
+        UI.actieBtn.innerText = "Kies een antwoord";
+        UI.actieBtn.className = "w-full max-w-md bg-slate-200 text-slate-400 py-4 rounded-2xl font-black uppercase text-sm";
+      }
+    }
+
+    function selectAnswer(gekozen, btn, q) {
+      if(state.beantwoord) return;
+      state.beantwoord = true;
+      let isCorrect = (gekozen === q.a);
+
+      UI.fbBox.classList.remove('hidden');
+      if(isCorrect) {
+        state.score++;
+        // Update de zichtbare score direct na een goed antwoord
+        let totaalVragen = state.vragenLijst.filter(v => v.type !== 'info').length;
+        UI.score.innerText = `${state.score} / ${totaalVragen}`;
+
+        btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+        UI.fbBox.innerHTML = "<strong>✅ Correct!</strong> Zeer goed geweten.";
+        UI.fbBox.className = "w-full max-w-md p-4 rounded-xl text-center text-sm mt-4 border-2 bg-green-50 border-green-400 text-green-700 shadow-inner";
+        confetti({ particleCount: 30, spread: 60, origin: { y: 0.8 } });
+      } else {
+        state.fouteVragen.push(q);
+        btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800', 'animate-shake');
+        UI.fbBox.innerHTML = `<strong>❌ Fout!</strong> Het was: <br><em>${q.a}</em>`;
+        UI.fbBox.className = "w-full max-w-md p-4 rounded-xl text-center text-sm mt-4 border-2 bg-red-50 border-red-400 text-red-700 shadow-inner animate-shake";
+      }
+
+      UI.actieBtn.disabled = false;
+      UI.actieBtn.innerText = "Volgende 👉";
+      UI.actieBtn.className = "w-full max-w-md bg-slate-800 hover:bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-sm shadow-lg transition-colors";
+    }
+
+    function startVolgendeEtappe() {
+      state.transitGezien = true;
+      UI.etappeScherm.classList.add('hidden');
+      UI.etappeScherm.classList.remove('flex');
+      laadVraag();
+    }
+
+    function volgendeActie() {
+      state.index++;
+      laadVraag();
+    }
+
+    function eindigSpel() {
+      UI.gameUI.classList.add('hidden');
+      UI.gameUI.classList.remove('flex');
+      UI.berichtScherm.classList.remove('hidden');
+      UI.berichtScherm.classList.add('flex');
+
+      let enkelVragen = state.vragenLijst.filter(v => v.type !== 'info');
+      let maxScore = enkelVragen.length;
+      let perc = Math.round((state.score / maxScore) * 100);
+
+      document.getElementById('eind-score-getal').innerText = perc;
+      document.getElementById('eind-status').innerText = `${state.score} van de ${maxScore} vragen juist`;
+
+      if (perc >= 90) {
+        document.getElementById('eind-titel').innerText = "Verkeersexpert! 🥇";
+        document.getElementById('eind-emoji').innerText = "🌟";
+        confetti({ particleCount: 300, spread: 120, origin: { y: 0.5 } });
+      } else {
+        document.getElementById('eind-titel').innerText = "Expeditie Voltooid!";
+        document.getElementById('eind-emoji').innerText = "🚦";
+      }
+
+      if (perc < 100 && state.fouteVragen.length > 0) {
+        document.getElementById('remedie-btn').classList.remove('hidden');
+      }
+    }
+
+    function startRemediering() {
+      state.vragenLijst = [...state.fouteVragen];
+      state.fouteVragen = [];
+      state.index = 0;
+      state.score = 0;
+      state.isRemediering = true;
+      
+      UI.berichtScherm.classList.add('hidden');
+      UI.berichtScherm.classList.remove('flex');
+      document.getElementById('remedie-btn').classList.add('hidden');
+      
+      UI.gameUI.classList.remove('hidden');
+      UI.gameUI.classList.add('flex');
+      laadVraag();
+    }
+  </script>
+</body>
+</html>
