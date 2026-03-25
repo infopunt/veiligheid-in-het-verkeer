@@ -41,7 +41,7 @@
         <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-xl border-l-8 border-yellow-400 text-left mb-6 max-w-lg text-slate-700">
             <p class="mb-2 font-black text-lg text-teal-700">Welkom (terug) in het verkeer!</p>
             <p class="text-sm mb-3">Tijdens deze expeditie doorlopen we 4 modules. Eerst krijg je de theorie te zien, daarna test je je kennis. Maak je een foutje? Geen probleem, op het einde krijg je de kans om je fouten te verbeteren.</p>
-            <p class="text-sm font-bold text-yellow-600">Lees goed, denk logisch na en behaal een top-score!</p>
+            <p class="text-sm font-bold text-yellow-600">Lees goed, denk logisch na en behaal je een top-score!</p>
         </div>
         <button onclick="startSpel()" class="bg-teal-600 hover:bg-teal-700 text-white font-black py-4 px-10 rounded-full shadow-lg uppercase tracking-widest hover:scale-105 transition-transform text-lg border-b-4 border-teal-800">Start de Expeditie</button>
     </div>
@@ -115,6 +115,7 @@
       return `<img src="${naam}.png" class="w-32 h-32 sm:w-40 sm:h-40 object-contain mx-auto mt-4 rounded-xl shadow-md border border-slate-200 bg-white p-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Foto+Ontbreekt';">`;
     }
 
+    // THEORIE BLOKKEN MET AFBEELDINGEN
     const theorieM1 = `
       <h3 class="text-2xl font-black mb-4 text-teal-800 uppercase">🧠 Theorie: Verkeersborden</h3>
       <ul class="text-left text-sm sm:text-base space-y-3 font-medium text-slate-700">
@@ -132,6 +133,7 @@
         <li>👉 De gevaarlijkste plek is <strong>rechts naast en vlak voor</strong> de cabine.</li>
         <li>👉 <strong>Gouden regel:</strong> Blijf er altijd ruim achter. Zie jij de chauffeur in zijn zijspiegel? Dan ziet hij jou ook!</li>
       </ul>
+      <img src="dodehoek.png" alt="Illustratie dode hoek" class="w-full max-w-sm mx-auto mt-6 rounded-xl shadow-md border-2 border-slate-200" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200?text=Foto+hier+plaatsen';">
     `;
 
     const theorieM3 = `
@@ -142,16 +144,18 @@
         <li>👉 Steek altijd duidelijk je arm uit als je van richting wil veranderen.</li>
         <li>👉 Je GSM vasthouden in je hand tijdens het fietsen is <strong>streng verboden</strong>.</li>
       </ul>
+      <img src="fietsers.png" alt="Fietsen in groep" class="w-full max-w-sm mx-auto mt-6 rounded-xl shadow-md border-2 border-slate-200" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200?text=Foto+hier+plaatsen';">
     `;
 
     const theorieM4 = `
       <h3 class="text-2xl font-black mb-4 text-teal-800 uppercase">🧠 Theorie: Noodsituaties</h3>
       <ul class="text-left text-sm sm:text-base space-y-3 font-medium text-slate-700">
         <li>👉 Er gebeurt een ongeval? Zorg <strong>eerst voor je eigen veiligheid</strong> (doe een fluohesje aan, ga in de veilige berm staan).</li>
-        <li>👉 Bel daarna onmiddellijk het noodnummer <strong>112</strong> en vertel duidelijk waar je precies bent.</li>
+        <li>👉 Bel het noodnummer <strong>112</strong>. Tip: Gebruik de <strong>App '112 BE'</strong> op je smartphone! Deze stuurt meteen jouw exacte GPS-locatie naar de hulpdiensten, wat handig is als je niet weet in welke straat je bent.</li>
         <li>👉 Verplaats een gewond slachtoffer nóóit, tenzij er direct brandgevaar is.</li>
         <li>👉 <strong class="text-red-600">Geef een slachtoffer NOOIT iets te eten of te drinken!</strong> Als ze in het ziekenhuis nog onderzocht of geopereerd moeten worden, is een nuchtere maag levensbelangrijk!</li>
       </ul>
+      <img src="app112.png" alt="App 112 BE" class="w-48 mx-auto mt-6 rounded-xl shadow-md border-2 border-slate-200" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x200?text=Foto+hier+plaatsen';">
     `;
 
     const origineleVragen = [
@@ -208,6 +212,7 @@
       { type: 'info', module: modules.m4, text: theorieM4 },
       { module: modules.m4, q: "Je fietst naar school en ziet plots een ongeval gebeuren. Wat is het ALLEREERSTE dat je moet doen?", a: "Zorgen voor je eigen veiligheid (bv. fluohesje aandoen en veilig gaan staan).", opties: ["Zorgen voor je eigen veiligheid (bv. fluohesje aandoen en veilig gaan staan).", "Direct het slachtoffer recht proberen te trekken.", "Verder fietsen, want je bent al laat voor school."] },
       { module: modules.m4, q: "Welk telefoonnummer bel je als iemand dringend een ziekenwagen nodig heeft?", a: "112", opties: ["112", "101", "100"] },
+      { module: modules.m4, q: "Waarom is het heel erg handig om in geval van nood te bellen via de App '112 BE'?", a: "Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", opties: ["Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", "Omdat je met de app gratis belt, en via het gewone nummer moet je betalen.", "Omdat je via de app een videocall kan starten met de dokter."] },
       { module: modules.m4, q: "Waar of Niet Waar: Iemand heeft net een zware val gemaakt en klaagt over dorst. Je mag hem gerust een grote slok water geven.", a: "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn).", opties: ["Waar", "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn)."] },
       { module: modules.m4, q: "Je hebt 112 gebeld. Wat is de allerbelangrijkste informatie die de operator moet weten?", a: "Waar je precies bent (straat, gemeente of een herkenningspunt).", opties: ["Waar je precies bent (straat, gemeente of een herkenningspunt).", "Je eigen naam en achternaam.", "Welke kleur fiets het slachtoffer heeft."] },
       { module: modules.m4, q: "Waar of Niet Waar: Je mag een gewonde fietser die op de straat ligt altijd meteen opheffen en naar de stoep sleuren.", a: "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is).", opties: ["Waar", "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is)."] },
@@ -222,7 +227,6 @@
     let huidigeModuleWeergave = null;
     let isRemediering = false;
     
-    // Bereken maximaal aantal theorievragen (zonder info slides)
     const maxVragen = origineleVragen.filter(v => v.type !== 'info').length;
 
     function toggleSpiekbriefje() {
