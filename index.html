@@ -13,31 +13,24 @@
     .animate-ride-across { animation: rideAcross 5s linear forwards; }
     @keyframes rideAcross { 0% { transform: translateX(-100vw); } 100% { transform: translateX(100vw); } }
     .answ-btn-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-    .animate-shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-2px, 0, 0); }
-      20%, 80% { transform: translate3d(4px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-      40%, 60% { transform: translate3d(6px, 0, 0); }
-    }
   </style>
 </head>
 <body class="flex justify-center items-center bg-gradient-to-br from-slate-200 via-gray-100 to-slate-300 sm:p-4">
 
   <div id="spiek-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-sm flex justify-center items-center p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full h-[85vh] flex flex-col overflow-hidden shadow-2xl border-4 border-yellow-500">
+    <div class="bg-white rounded-2xl max-w-2xl w-full flex flex-col overflow-hidden shadow-2xl border-4 border-yellow-500">
        <div class="p-4 bg-slate-800 text-white flex justify-between items-center shrink-0">
-          <h3 class="font-black text-yellow-400">📜 De 7 Gouden Regels</h3>
+          <h3 class="font-black text-yellow-400">📜 De Gouden Regels</h3>
           <button onclick="toggleSpiekbriefje()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-bold transition-colors shadow-md">Sluiten ❌</button>
        </div>
        <div class="overflow-auto p-6 bg-slate-50 flex-grow text-slate-700 text-sm leading-relaxed space-y-4">
-          <p><strong>1. Wandelen:</strong> Geen voetpad? Wandel <strong>links</strong> van de weg tegen het verkeer in.</p>
-          <p><strong>2. Fietsen in groep:</strong> Buiten de bebouwde kom mag je met 2 naast elkaar. Komt er een tegenligger of wil er iemand inhalen? Dan <strong>moet</strong> je achter elkaar gaan rijden.</p>
-          <p><strong>3. Borden herkennen:</strong> Driehoek = Gevaar/Voorrang. Rond met rode rand = Verbod. Rond blauw = Verplicht. Vierkant blauw = Aanwijzing.</p>
-          <p><strong>4. Smartphone:</strong> Je GSM vasthouden op de fiets is streng verboden en kost je een zware boete.</p>
-          <p><strong>5. Dode Hoek:</strong> Sta <strong>nooit</strong> rechts naast een vrachtwagen. Blijf er ruim achter en zoek de chauffeur in zijn spiegel.</p>
-          <p><strong>6. Oogcontact:</strong> Voorrang moet je krijgen, niet blindelings nemen. Kijk de chauffeur in de ogen!</p>
-          <p><strong>7. Ongeval:</strong> 1. Veiligheid (fluohesje aan). 2. Bel <strong>112</strong>. 3. Verplaats een gewonde nooit, behalve bij brandgevaar.</p>
+          <p><strong>Borden herkennen:</strong></p>
+          <ul class="list-disc pl-5">
+            <li>Driehoek met rode rand = Gevaar / Voorrang.</li>
+            <li>Rond met rode rand = Verbod.</li>
+            <li>Rond en blauw = Verplicht.</li>
+            <li>Vierkant of rechthoekig blauw = Aanwijzing.</li>
+          </ul>
        </div>
     </div>
   </div>
@@ -49,26 +42,19 @@
         <h1 class="text-4xl font-black text-slate-800 mb-4 uppercase italic">Veilig op Weg</h1>
         <div class="bg-white p-6 rounded-2xl shadow-xl border-l-8 border-yellow-500 text-left mb-8 max-w-lg text-slate-700">
             <p class="mb-3 font-bold">Het verkeer is een jungle, ben jij klaar om te overleven?</p>
-            <p class="text-sm mb-3">Tijdens deze expeditie van zo'n 40 minuten doorlopen we 8 intensieve modules. We testen je kennis over tientallen verkeersborden en situaties.</p>
-            <p class="text-sm font-bold text-yellow-600">Lees de theorie grondig, bekijk de foto's goed en behaal je diploma!</p>
+            <p class="text-sm mb-3">Tijdens deze expeditie testen we je kennis over de belangrijkste verkeersborden. Haal jij een topscore?</p>
+            <p class="text-sm font-bold text-yellow-600">Lees de theorie goed, bekijk de foto's en behaal je diploma!</p>
         </div>
         <button onclick="startSpel()" class="bg-slate-800 text-white font-black py-4 px-12 rounded-full shadow-lg uppercase tracking-widest hover:scale-105 transition-transform text-xl border-b-4 border-yellow-500">Start de Expeditie</button>
     </div>
 
-    <div id="etappe-scherm" class="hidden absolute inset-0 z-50 bg-slate-900/95 flex flex-col justify-center items-center text-center p-6 backdrop-blur-md">
-      <h2 class="text-4xl font-black text-white mb-2 italic" id="etappe-titel">Nieuwe Module!</h2>
-      <p class="text-3xl text-yellow-400 mb-10 font-bold" id="volgende-land-naam">Module Naam</p>
-      <div class="w-full overflow-hidden relative h-24 mb-10"><div class="text-7xl absolute bottom-0 left-0 animate-ride-across">🚲💨</div></div>
-      <button onclick="startVolgendeEtappe()" class="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-black py-4 px-12 rounded-full shadow-2xl uppercase text-xl transition-colors">Start Module 🚦</button>
-    </div>
-
     <div id="game-ui" class="hidden flex-col h-full w-full">
-      <div id="game-header" class="p-3 text-white flex flex-col gap-2 shrink-0 transition-colors duration-500 bg-slate-800">
+      <div id="game-header" class="p-3 text-white flex flex-col gap-2 shrink-0 bg-slate-800">
         <div class="flex justify-between items-center px-1">
-          <div class="flex items-center space-x-2"><span id="land-icoon" class="text-3xl">📚</span><span class="font-black text-xs sm:text-sm uppercase" id="land-naam">Intro</span></div>
+          <div class="flex items-center space-x-2"><span class="text-3xl">🛑</span><span class="font-black text-xs sm:text-sm uppercase">Verkeersborden</span></div>
           <div class="flex items-center space-x-3">
-            <button onclick="toggleSpiekbriefje()" class="bg-slate-100 text-slate-900 px-3 py-1 rounded-lg font-black text-xs border-b-2 border-slate-300 hover:bg-white transition-colors">REGELS 📜</button>
-            <div class="bg-black/40 px-3 py-1 rounded-lg font-black text-yellow-400 border border-yellow-500/30">
+            <button onclick="toggleSpiekbriefje()" class="bg-slate-100 text-slate-900 px-3 py-1 rounded-lg font-black text-xs hover:bg-white transition-colors">REGELS 📜</button>
+            <div class="bg-black/40 px-3 py-1 rounded-lg font-black text-yellow-400">
               ⭐ Score: <span id="score-weergave">0</span>
             </div>
           </div>
@@ -77,57 +63,167 @@
       </div>
 
       <div id="scroll-container" class="flex-grow overflow-y-auto p-4 flex flex-col items-center bg-slate-50">
-        <div id="verhaal-tekst" class="text-center text-sm font-bold text-slate-500 mb-4 uppercase tracking-widest"></div>
-        <div id="vraag-container" class="mb-4 w-full flex justify-center"></div>
-        <div id="antwoord-container" class="w-full max-w-md grid gap-2"></div>
-        <div id="feedback-antwoord" class="hidden w-full max-w-md p-4 rounded-xl text-center font-black text-sm mt-4 border-4"></div>
+        <div id="vraag-container" class="mb-4 w-full flex flex-col items-center text-center font-bold text-lg text-slate-800"></div>
+        <div id="antwoord-container" class="w-full max-w-md grid gap-3 mt-4"></div>
       </div>
 
-      <div class="p-4 bg-white border-t flex justify-center shrink-0 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+      <div class="p-4 bg-white border-t flex justify-center shrink-0">
         <button id="action-btn" onclick="volgendeActie()" class="w-full max-w-md bg-slate-200 text-slate-400 py-4 rounded-2xl font-black uppercase text-sm transition-all" disabled>Kies een antwoord...</button>
       </div>
     </div>
 
-    <div id="bericht-scherm" class="hidden flex-grow flex-col h-full w-full items-center justify-center p-8 text-center overflow-y-auto bg-slate-50">
-        <div id="eind-emoji" class="text-7xl mb-4">🏆</div>
-        <h2 id="eind-titel" class="text-4xl font-black text-slate-800 mb-2 italic uppercase">Expeditie Voltooid!</h2>
+    <div id="bericht-scherm" class="hidden flex-grow flex-col h-full w-full items-center justify-center p-8 text-center bg-slate-50">
+        <div class="text-7xl mb-4">🏆</div>
+        <h2 class="text-4xl font-black text-slate-800 mb-2 italic uppercase">Expeditie Voltooid!</h2>
         <div class="bg-slate-800 text-white p-8 rounded-[3rem] mb-6 border-b-8 border-yellow-500 w-full max-w-sm shadow-xl">
             <div class="text-7xl font-black text-yellow-400 mb-2"><span id="eind-score-getal">0</span>%</div>
-            <p id="eind-status" class="text-xs opacity-70 uppercase tracking-widest font-bold">Jouw Score</p>
+            <p class="text-xs opacity-70 uppercase tracking-widest font-bold">Jouw Score</p>
         </div>
-        
-        <div class="bg-white border-l-8 border-blue-500 p-4 text-left mb-6 max-w-sm rounded-r-xl shadow-md">
-            <p class="font-black text-blue-800 uppercase text-xs mb-1">📸 Screenshot Verplicht</p>
-            <p class="text-xs text-slate-600 leading-tight">Maak een screenshot van dit eindscherm en voeg dit toe aan je opdracht in Classroom.</p>
-        </div>
-
-        <div class="flex flex-col gap-3 w-full max-w-sm">
-            <button id="remedie-btn" onclick="startRemediering()" class="hidden bg-red-500 hover:bg-red-600 text-white font-black py-4 px-10 rounded-full uppercase tracking-widest shadow-lg animate-pulse transition-colors">Start Remediëring ✍️</button>
-            <button onclick="window.location.reload()" class="bg-slate-300 hover:bg-slate-400 text-slate-800 font-black py-4 px-10 rounded-full uppercase tracking-widest transition-colors">Opnieuw Starten</button>
-        </div>
+        <button onclick="window.location.reload()" class="bg-slate-300 hover:bg-slate-400 text-slate-800 font-black py-4 px-10 rounded-full uppercase tracking-widest transition-colors">Opnieuw Starten</button>
     </div>
   </div>
 
   <script>
-    const modules = {
-      m1: { code: 'm1', naam: 'Module 1: Verkeersborden', icoon: '🛑', bg: 'bg-red-600' },
-      m2: { code: 'm2', naam: 'Module 2: Voorrangsregels', icoon: '⚠️', bg: 'bg-orange-600' },
-      m3: { code: 'm3', naam: 'Module 3: Plaats op de weg', icoon: '🛣️', bg: 'bg-teal-600' },
-      m4: { code: 'm4', naam: 'Module 4: Fietsen in Groep', icoon: '🚴‍♂️', bg: 'bg-emerald-600' },
-      m5: { code: 'm5', naam: 'Module 5: Zichtbaarheid', icoon: '💡', bg: 'bg-blue-600' },
-      m6: { code: 'm6', naam: 'Module 6: De Dode Hoek', icoon: '🚛', bg: 'bg-gray-800' },
-      m7: { code: 'm7', naam: 'Module 7: Afleiding & Gedrag', icoon: '📱', bg: 'bg-purple-600' },
-      m8: { code: 'm8', naam: 'Module 8: Noodsituaties', icoon: '🚑', bg: 'bg-rose-600' }
-    };
-
-    // Helper functie om de afbeeldingen mooi weer te geven
     function imgTag(naam) {
-      return `<br><img src="${naam}.jpg" class="w-32 h-32 object-contain mx-auto mt-4 rounded-lg shadow-md border border-slate-200 bg-white p-2">`;
+      // Voegt de afbeelding toe met de exacte naam en .png extensie
+      return `<br><img src="${naam}.png" class="w-40 h-40 object-contain mx-auto mt-4 rounded-lg shadow-md border border-slate-200 bg-white p-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Foto+Ontbreekt';">`;
     }
 
-    const alleVragenData = [
-      // MODULE 1: BORDEN (Alle 27 foto's van de leerkracht)
-      { type: 'info', module: modules.m1, thema: 'De Vormen van Borden', inhoud: `Gevaarsborden zijn altijd een <strong>driehoek met een rode rand</strong>. Verbodsborden zijn <strong>rond met een rode rand</strong>. Verplichte borden zijn <strong>rond en blauw</strong>. Aanwijzingsborden zijn <strong>vierkant of rechthoekig en blauw</strong>.` },
+    const vragen = [
+      { type: 'info', text: "We gaan beginnen! Bekijk zo meteen elke foto goed en kies de juiste betekenis van het verkeersbord." },
+      { q: "Wat betekent dit bord?" + imgTag("oversteekplaats voor voetgangers"), a: "Oversteekplaats voor voetgangers", opties: ["Oversteekplaats voor voetgangers", "Verplicht voetpad", "Verboden voor voetgangers"] },
+      { q: "Wat betekent dit bord?" + imgTag("doodlopende weg met uitzondering voor wandelaars en fietsers"), a: "Doodlopende weg, uitzondering wandelaars en fietsers", opties: ["Verboden toegang voor iedereen", "Doodlopende weg, uitzondering wandelaars en fietsers", "Verplicht pad voor wandelaars en fietsers"] },
+      { q: "Wat betekent dit bord?" + imgTag("oversteekplaats voor fietsers"), a: "Oversteekplaats voor fietsers", opties: ["Oversteekplaats voor fietsers", "Einde van het fietspad", "Gevaar: vallende fietsers"] },
+      { q: "Wat betekent dit bord?" + imgTag("eenrichtingsverkeer"), a: "Eenrichtingsverkeer", opties: ["Eenrichtingsverkeer", "Verplicht rechtdoor", "Doodlopende weg"] },
+      { q: "Wat betekent dit bord?" + imgTag("begin van een woonerf of erf"), a: "Begin van een woonerf of erf", opties: ["Begin van een woonerf of erf", "Speelstraat", "Voetgangerszone"] },
+      { q: "Wat betekent dit bord?" + imgTag("begin van een bebouwde kom"), a: "Begin van een bebouwde kom", opties: ["Begin van een bebouwde kom", "Einde van een bebouwde kom", "Zone met stadsverkeer"] },
+      { q: "Wat betekent dit bord?" + imgTag("verplicht rondgaand verkeer"), a: "Verplicht rondgaand verkeer (rotonde)", opties: ["Verplicht rondgaand verkeer (rotonde)", "Keerpunt", "Verboden te keren"] },
+      { q: "Wat betekent dit bord?" + imgTag("verplicht fietspad"), a: "Verplicht fietspad", opties: ["Verplicht fietspad", "Verboden voor fietsers", "Aanbevolen fietsroute"] },
+      { q: "Wat betekent dit bord?" + imgTag("deel van de weg voorbehouden voor voetgangers en fietsers"), a: "Deel van de weg voorbehouden voor voetgangers en fietsers", opties: ["Deel van de weg voorbehouden voor voetgangers en fietsers", "Verboden voor voetgangers en fietsers", "Oversteekplaats"] },
+      { q: "Wat betekent dit bord?" + imgTag("verplicht één van de pijlen te volgen"), a: "Verplicht één van de pijlen te volgen", opties: ["Verplicht één van de pijlen te volgen", "Voorsorteren verplicht", "Eenrichtingsverkeer"] },
+      { q: "Wat betekent dit bord?" + imgTag("verplicht rechtdoor"), a: "Verplicht rechtdoor", opties: ["Verplicht rechtdoor", "Eenrichtingsverkeer", "Doodlopende weg"] },
+      { q: "Wat betekent dit bord?" + imgTag("verbod te rijden met een hogere snelheid"), a: "Verbod te rijden met een hogere snelheid", opties: ["Verbod te rijden met een hogere snelheid", "Verplichte minimumsnelheid", "Aanbevolen snelheid"] },
+      { q: "Wat betekent dit bord?" + imgTag("verbod om te keren"), a: "Verbod om te keren", opties: ["Verbod om te keren", "Verplicht om te keren", "Doodlopende weg"] },
+      { q: "Wat betekent dit bord?" + imgTag("verbod om links af te slaan"), a: "Verbod om links af te slaan", opties: ["Verbod om links af te slaan", "Verplicht naar rechts", "Gevaarlijke bocht naar links"] },
+      { q: "Wat betekent dit bord?" + imgTag("verboden toegang voor bestuurders van rijwielen"), a: "Verboden toegang voor bestuurders van rijwielen", opties: ["Verboden toegang voor bestuurders van rijwielen", "Verplicht fietspad", "Gevaar voor overstekende fietsers"] },
+      { q: "Wat betekent dit bord?" + imgTag("verboden toegang voor voetgangers"), a: "Verboden toegang voor voetgangers", opties: ["Verboden toegang voor voetgangers", "Verplicht voetpad", "Oversteekplaats voor voetgangers"] },
+      { q: "Wat betekent dit bord?" + imgTag("verboden richting voor iedere bestuurder"), a: "Verboden richting voor iedere bestuurder", opties: ["Verboden richting voor iedere bestuurder", "Stop en verleen voorrang", "Einde van alle verboden"] },
+      { q: "Wat betekent dit bord?" + imgTag("verboden toegang in beide richtingen voor iedere bestuurder"), a: "Verboden toegang in beide richtingen voor iedere bestuurder", opties: ["Verboden toegang in beide richtingen voor iedere bestuurder", "Zone met beperkte parkeertijd", "Woonerf"] },
+      { q: "Wat betekent dit bord?" + imgTag("kruispunt waar voorrang van rechts geldt"), a: "Kruispunt waar voorrang van rechts geldt", opties: ["Kruispunt waar voorrang van rechts geldt", "Kruispunt met verkeerslichten", "Gevaarlijk kruispunt"] },
+      { q: "Wat betekent dit bord?" + imgTag("voorrang op de kruisende wegen"), a: "Voorrang op de kruisende wegen", opties: ["Voorrang op de kruisende wegen", "Kruispunt waar voorrang van rechts geldt", "Let op, zijstraat"] },
+      { q: "Wat betekent dit bord?" + imgTag("stoppen en voorrang verlenen"), a: "Stoppen en voorrang verlenen (STOP)", opties: ["Stoppen en voorrang verlenen (STOP)", "Voorrang verlenen (stoppen niet verplicht)", "Verboden toegang"] },
+      { q: "Wat betekent dit bord?" + imgTag("voorrang verlenen"), a: "Voorrang verlenen (Haaietanden)", opties: ["Voorrang verlenen (Haaietanden)", "Stoppen en voorrang verlenen", "Je hebt hier voorrang"] },
+      { q: "Wat betekent dit bord?" + imgTag("oversteekplaats voor fietsers en bromfietsers"), a: "Oversteekplaats voor fietsers en bromfietsers", opties: ["Oversteekplaats voor fietsers en bromfietsers", "Verplicht fietspad", "Verboden voor fietsers"] },
+      { q: "Wat betekent dit bord?" + imgTag("opgelet kinderen"), a: "Opgelet kinderen (bv. nabij school)", opties: ["Opgelet kinderen (bv. nabij school)", "Speelstraat", "Voetgangerszone"] },
+      { q: "Wat betekent dit bord?" + imgTag("rijbaanversmalling"), a: "Rijbaanversmalling", opties: ["Rijbaanversmalling", "Doodlopende weg", "Werken in uitvoering"] },
+      { q: "Wat betekent dit bord?" + imgTag("gevaarlijke bocht naar rechts"), a: "Gevaarlijke bocht naar rechts", opties: ["Gevaarlijke bocht naar rechts", "Verplicht rechts afslaan", "Omleiding naar rechts"] },
+      { q: "Wat betekent dit bord?" + imgTag("gevaarlijke daling"), a: "Gevaarlijke daling", opties: ["Gevaarlijke daling", "Steile helling naar boven", "Gevaar voor vallende stenen"] }
+    ];
+
+    let huidigeIndex = 0;
+    let score = 0;
+    let antwoordGekozen = false;
+    let maxVragen = vragen.length - 1; 
+
+    function toggleSpiekbriefje() {
+      const modal = document.getElementById('spiek-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function startSpel() {
+      document.getElementById('start-scherm').classList.add('hidden');
+      document.getElementById('game-ui').classList.remove('hidden');
+      document.getElementById('game-ui').classList.add('flex');
+      toonVraag();
+    }
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function toonVraag() {
+      if (huidigeIndex >= vragen.length) { eindigSpel(); return; }
       
-      { type: 'mc', module: modules.m1, q: "Wat betekent dit bord?" + imgTag("oversteekplaats voor voetgangers"), a: "Oversteekplaats voor voetgangers", opties: ["Oversteekplaats voor voetgangers", "Verplicht voetpad", "Verboden voor voetgangers"] },
-      { type: 'mc', module: modules.m1, q: "Wat betekent dit bord?" + imgTag("doodlopende weg met uitzondering voor wandelaars en fietsers"), a: "Doodlopende weg, met uitzondering voor wandelaars en fietsers", opties: ["Verboden toegang voor iedereen", "Doodlopende weg, met uitzondering voor wandelaars en fietsers", "Verplicht pad
+      let vraagData = vragen[huidigeIndex];
+      let vCont = document.getElementById('vraag-container');
+      let aCont = document.getElementById('antwoord-container');
+      let actBtn = document.getElementById('action-btn');
+      
+      document.getElementById('progress-bar').style.width = ((huidigeIndex / vragen.length) * 100) + '%';
+      
+      aCont.innerHTML = '';
+      antwoordGekozen = false;
+
+      if (vraagData.type === 'info') {
+        vCont.innerHTML = `<div class="bg-blue-100 text-blue-800 p-6 rounded-xl border-2 border-blue-300 shadow-sm">${vraagData.text}</div>`;
+        actBtn.textContent = "Ik snap het, doorgaan!";
+        actBtn.className = "w-full max-w-md bg-blue-500 hover:bg-blue-600 text-white py-4 rounded-2xl font-black uppercase text-sm transition-all shadow-lg";
+        actBtn.disabled = false;
+      } else {
+        vCont.innerHTML = vraagData.q;
+        let opties = shuffle([...vraagData.opties]);
+        
+        opties.forEach(optie => {
+          let btn = document.createElement('button');
+          btn.className = "answ-btn-hover bg-white border-2 border-slate-200 text-slate-700 font-bold p-4 rounded-xl text-left transition-all w-full shadow-sm";
+          btn.textContent = optie;
+          btn.onclick = () => kiesAntwoord(btn, optie === vraagData.a, vraagData.a);
+          aCont.appendChild(btn);
+        });
+
+        actBtn.textContent = "Kies een antwoord...";
+        actBtn.className = "w-full max-w-md bg-slate-200 text-slate-400 py-4 rounded-2xl font-black uppercase text-sm transition-all";
+        actBtn.disabled = true;
+      }
+    }
+
+    function kiesAntwoord(btn, isCorrect, correctAntwoord) {
+      if (antwoordGekozen) return;
+      antwoordGekozen = true;
+
+      let aCont = document.getElementById('antwoord-container');
+      let actBtn = document.getElementById('action-btn');
+
+      Array.from(aCont.children).forEach(b => {
+        b.disabled = true;
+        if (b.textContent === correctAntwoord) {
+          b.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+          b.classList.add('bg-green-100', 'border-green-500', 'text-green-800');
+        } else if (b === btn && !isCorrect) {
+          b.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+          b.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+        } else {
+          b.classList.add('opacity-50');
+        }
+      });
+
+      if (isCorrect) {
+        score++;
+        document.getElementById('score-weergave').innerText = score;
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+      }
+
+      actBtn.textContent = "Volgende Vraag ➔";
+      actBtn.className = "w-full max-w-md bg-yellow-500 hover:bg-yellow-600 text-slate-900 py-4 rounded-2xl font-black uppercase text-sm transition-all shadow-lg animate-pulse";
+      actBtn.disabled = false;
+    }
+
+    function volgendeActie() {
+      huidigeIndex++;
+      document.getElementById('scroll-container').scrollTop = 0;
+      toonVraag();
+    }
+
+    function eindigSpel() {
+      document.getElementById('game-ui').classList.remove('flex');
+      document.getElementById('game-ui').classList.add('hidden');
+      document.getElementById('bericht-scherm').classList.remove('hidden');
+      document.getElementById('bericht-scherm').classList.add('flex');
+      
+      let percentage = Math.round((score / maxVragen) * 100);
+      document.getElementById('eind-score-getal').innerText = percentage;
+      confetti({ particleCount: 200, spread: 100, origin: { y: 0.5 } });
+    }
+  </script>
+</body>
+</html>
