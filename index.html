@@ -55,6 +55,8 @@
           <p><strong>Fietsen in groep:</strong> Buiten de bebouwde kom max. 2 naast elkaar. Komt er een tegenligger of wil er iemand inhalen? Ritsen en achter elkaar rijden!</p>
           <hr>
           <p><strong>Dode Hoek:</strong> Blijf altijd ruim ACHTER een vrachtwagen. Als jij de chauffeur in zijn spiegel ziet, ziet hij jou ook.</p>
+          <hr>
+          <p><strong>Voorrang:</strong> Geen borden of lichten? Rechts heeft voorrang! Een tram heeft altijd voorrang. Op een rotonde heb je (meestal) voorrang op wie de rotonde op wil.</p>
        </div>
     </div>
   </div>
@@ -68,9 +70,9 @@
             <div class="absolute -bottom-6 -right-4 text-5xl rotate-[15deg] drop-shadow-md">🚲</div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mb-4 bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text mt-2">Veilig op Weg! 🌍</h2>
             
-            <p class="mb-3">Welkom in het verkeer! Tijdens deze expeditie doorlopen we <strong>4 modules</strong>. Eerst krijg je de theorie te zien, daarna test je je kennis.</p>
+            <p class="mb-3">Welkom in het verkeer! Tijdens deze expeditie doorlopen we <strong>5 modules</strong>. Eerst krijg je de theorie te zien, daarna test je je kennis.</p>
             
-            <p class="mb-3">Maak je een foutje? Geen probleem, op het einde krijg je de kans om je fouten te verbeteren. Lees goed, denk logisch na en behaal een topscore!</p>
+            <p class="mb-3">We maken er een flinke roadtrip van: je krijgt tientallen verkeerssituaties, borden en stellingen voorgeschoteld. Maak je een foutje? Geen probleem, op het einde krijg je de kans om je fouten in de werkplaats te repareren!</p>
             
             <p class="mb-5">Weet je even niet meer hoe de regels in elkaar zitten? Je kan altijd op <strong>Regels 📜</strong> klikken om te spieken. Je hebt <strong>30 minuten</strong> de tijd voor de hele expeditie.</p>
             
@@ -79,7 +81,8 @@
                 <div class="flex items-center space-x-3 mb-2 text-slate-600 font-medium"><span class="text-xl">🛑</span> <span><strong>Module 1:</strong> Verkeersborden</span></div>
                 <div class="flex items-center space-x-3 mb-2 text-slate-600 font-medium"><span class="text-xl">🚛</span> <span><strong>Module 2:</strong> Dode Hoek & Zicht</span></div>
                 <div class="flex items-center space-x-3 mb-2 text-slate-600 font-medium"><span class="text-xl">🚴‍♂️</span> <span><strong>Module 3:</strong> Fietsers in Groep</span></div>
-                <div class="flex items-center space-x-3 text-slate-600 font-medium"><span class="text-xl">🚑</span> <span><strong>Module 4:</strong> Noodsituaties</span></div>
+                <div class="flex items-center space-x-3 mb-2 text-slate-600 font-medium"><span class="text-xl">🚑</span> <span><strong>Module 4:</strong> Noodsituaties</span></div>
+                <div class="flex items-center space-x-3 text-slate-600 font-medium"><span class="text-xl">🚥</span> <span><strong>Module 5:</strong> Voorrangsregels</span></div>
             </div>
         </div>
       </div>
@@ -180,7 +183,7 @@
     };
 
     function imgTag(naam) {
-      return `<br><img src="${naam}.png" alt="${naam}" class="max-w-[200px] max-h-[150px] object-contain rounded-xl shadow-sm border border-slate-200 bg-white mb-2 mx-auto mt-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=Foto';">`;
+      return `<br><img src="${naam}.png" alt="${naam}" class="max-w-[200px] max-h-[150px] object-contain rounded-xl shadow-sm border border-slate-200 bg-white mb-2 mx-auto mt-2" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x150?text=Zoek+naar+foto';">`;
     }
 
     // THEORIE BLOKKEN
@@ -214,18 +217,32 @@
 
     const theorieM4 = `
       <ul class="text-left space-y-3">
-        <li>👉 Er gebeurt een ongeval? Zorg <strong>eerst voor je eigen veiligheid</strong> (doe een fluohesje aan, ga in de veilige berm staan).</li>
-        <li>👉 Bel het noodnummer <strong>112</strong>. Tip: Gebruik de <strong>App '112 BE'</strong> op je smartphone! Deze stuurt meteen jouw exacte GPS-locatie naar de hulpdiensten.</li>
+        <li>👉 Er gebeurt een ongeval? Zorg <strong>eerst voor je eigen veiligheid</strong> (fluohesje aan, ga veilig aan de kant staan).</li>
+        <li>👉 Bel <strong>112</strong>. Tip: Gebruik de <strong>App '112 BE'</strong>! Deze stuurt meteen jouw exacte locatie door.</li>
         <li>👉 Verplaats een gewond slachtoffer nóóit, tenzij er direct brandgevaar is.</li>
-        <li>👉 <strong class="text-red-600">Geef een slachtoffer NOOIT iets te eten of te drinken!</strong> Als ze in het ziekenhuis nog onderzocht of geopereerd moeten worden, is een nuchtere maag levensbelangrijk!</li>
+        <li>👉 <strong class="text-red-600">Geef een slachtoffer NOOIT eten of drinken!</strong> Bij een latere operatie in het ziekenhuis is een nuchtere maag levensbelangrijk!</li>
       </ul>
       ${imgTag("app 112")}
     `;
 
+    const theorieM5 = `
+      <ul class="text-left space-y-3">
+        <li>👉 <strong>Voorrang van rechts:</strong> Op een kruispunt zonder borden of lichten, heeft de bestuurder van rechts ALTIJD voorrang.</li>
+        <li>👉 <strong>Zebrapad:</strong> Voetgangers op het zebrapad hebben voorrang. Haal hier nóóit een stoppend voertuig in!</li>
+        <li>👉 <strong>De Tram:</strong> Een tram heeft <strong>altijd</strong> voorrang, zelfs als jij van rechts komt!</li>
+        <li>👉 <strong>Haaientanden:</strong> Bij haaientanden op jouw weghelft, moet jij voorrang verlenen aan de andere bestuurders.</li>
+      </ul>
+    `;
+
     const moduleLijsten = [
-      // MODULE 1
+      // MODULE 1: Verkeersborden
       [
         { type: 'info', thema: '🧠 Theorie: Verkeersborden', inhoud: theorieM1 },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Een blauw rond bord met een witte fiets verplicht je om dat fietspad te gebruiken.", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Een omgekeerde driehoek met een rode rand betekent dat je voorrang hébt op de rest.", antwoord: "Niet Waar (Je moet voorrang verlenen)", opties: ["Waar", "Niet Waar (Je moet voorrang verlenen)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Verkeersborden gaan voor op de gewone verkeersregels (zoals voorrang van rechts).", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Een rood, achthoekig bord betekent dat je voorrang moet verlenen, maar je hoeft niet te stoppen als er niemand aankomt.", antwoord: "Niet Waar (Een STOP-bord verplicht je altijd om te stoppen)", opties: ["Waar", "Niet Waar (Een STOP-bord verplicht je altijd om te stoppen)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Gele of oranje borden zie je alleen als er wegenwerken of omleidingen zijn.", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
         { type: 'mc', vraagTekst: "Waar of Niet Waar: Een rond bord met een rode rand betekent altijd dat iets verplicht is.", antwoord: "Niet Waar (Het is een verbodsbord)", opties: ["Waar", "Niet Waar (Het is een verbodsbord)"] },
         { type: 'mc', vraagTekst: "Wat betekent dit bord?" + imgTag("oversteekplaats voor voetgangers"), antwoord: "Oversteekplaats voor voetgangers", opties: ["Oversteekplaats voor voetgangers", "Verplicht voetpad", "Verboden voor voetgangers"] },
         { type: 'mc', vraagTekst: "Wat betekent dit bord?" + imgTag("doodlopende weg met uitzondering voor wandelaars en fietsers"), antwoord: "Doodlopende weg, uitzondering wandelaars en fietsers", opties: ["Verboden toegang voor iedereen", "Doodlopende weg, uitzondering wandelaars en fietsers", "Verplicht pad voor wandelaars en fietsers"] },
@@ -256,35 +273,58 @@
         { type: 'mc', vraagTekst: "Wat betekent dit bord?" + imgTag("gevaarlijke bocht naar rechts"), antwoord: "Gevaarlijke bocht naar rechts", opties: ["Gevaarlijke bocht naar rechts", "Verplicht rechts afslaan", "Omleiding naar rechts"] },
         { type: 'mc', vraagTekst: "Wat betekent dit bord?" + imgTag("gevaarlijke daling"), antwoord: "Gevaarlijke daling", opties: ["Gevaarlijke daling", "Steile helling naar boven", "Gevaar voor vallende stenen"] }
       ],
-      // MODULE 2
+      // MODULE 2: Dode Hoek
       [
         { type: 'info', thema: '🧠 Theorie: De Dode Hoek', inhoud: theorieM2 },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Moderne vrachtwagens hebben tegenwoordig zoveel camera's dat de dode hoek helemaal niet meer bestaat.", antwoord: "Niet Waar (Er blijven altijd blinde vlekken)", opties: ["Waar", "Niet Waar (Er blijven altijd blinde vlekken)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Je mag een vrachtwagen die naar rechts afslaat nog snel even langs de rechterkant inhalen als jij op het fietspad rijdt.", antwoord: "Niet Waar (Levensgevaarlijk!)", opties: ["Waar", "Niet Waar (Levensgevaarlijk!)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Als de vrachtwagen stopt, mag je er gewoon vanuit gaan dat hij jou gezien heeft.", antwoord: "Niet Waar (Maak altijd oogcontact via de spiegels)", opties: ["Waar", "Niet Waar (Maak altijd oogcontact via de spiegels)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Fietsers en voetgangers die in de dode hoek belanden zijn een van de grootste oorzaken van zware ongevallen in steden.", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: De dode hoek zit alleen maar aan de rechterkant van een vrachtwagen of bus.", antwoord: "Niet Waar (Zit ook vooraan, achteraan en links)", opties: ["Waar", "Niet Waar (Zit ook vooraan, achteraan en links)"] },
         { type: 'mc', vraagTekst: "Waar of Niet Waar: Als je recht voor de neus van een vrachtwagen staat, ben je altijd 100% zichtbaar voor de chauffeur.", antwoord: "Niet Waar (De chauffeur zit hoog en kan vlak voor de cabine niets zien).", opties: ["Waar", "Niet Waar (De chauffeur zit hoog en kan vlak voor de cabine niets zien)."] },
         { type: 'mc', vraagTekst: "Je staat als fietser rechts vlak naast de cabine van een vrachtwagen te wachten voor het rode licht. Is dit veilig?", antwoord: "Nee, dit is levensgevaarlijk. De chauffeur ziet jou niet in zijn dode hoek.", opties: ["Nee, dit is levensgevaarlijk. De chauffeur ziet jou niet in zijn dode hoek.", "Ja hoor, zolang je je arm uitsteekt als je vertrekt.", "Ja, want fietsers hebben altijd voorrang op vrachtwagens."] },
         { type: 'mc', vraagTekst: "Waar ga je staan als fietser wanneer je achter een vrachtwagen of bus moet wachten?", antwoord: "Ruim achter de vrachtwagen, zodat ik de spiegels goed kan zien.", opties: ["Ruim achter de vrachtwagen, zodat ik de spiegels goed kan zien.", "Helemaal vooraan, vlak voor de bumper, dan val ik goed op.", "Zo dicht mogelijk tegen de rechter achterband."] },
-        { type: 'mc', vraagTekst: "Hoe weet je 100% zeker dat een vrachtwagenchauffeur jou heeft opgemerkt?", antwoord: "Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", opties: ["Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", "Als je luid genoeg belt met je fietsbel.", "Als de richtingaanwijzer van de vrachtwagen aan staat."] },
-        { type: 'mc', vraagTekst: "Waar of Niet Waar: Alleen vrachtwagens hebben een dode hoek, gewone auto's en bussen hebben dit niet.", antwoord: "Niet Waar (Elk voertuig heeft dode hoeken).", opties: ["Waar", "Niet Waar (Elk voertuig heeft dode hoeken)."] }
+        { type: 'mc', vraagTekst: "Hoe weet je 100% zeker dat een vrachtwagenchauffeur jou heeft opgemerkt?", antwoord: "Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", opties: ["Als je de ogen van de chauffeur in zijn zijspiegel kunt zien (oogcontact).", "Als je luid genoeg belt met je fietsbel.", "Als de richtingaanwijzer van de vrachtwagen aan staat."] }
       ],
-      // MODULE 3
+      // MODULE 3: Fietsers in Groep
       [
         { type: 'info', thema: '🧠 Theorie: Fietsers in Groep', inhoud: theorieM3 },
-        { type: 'mc', vraagTekst: "Je fietst met je klas in een grote groep. Mogen jullie gezellig met drie naast elkaar fietsen?", antwoord: "Nee, je mag maximaal met twee naast elkaar fietsen.", opties: ["Nee, je mag maximaal met twee naast elkaar fietsen.", "Ja, als de weg breed genoeg is mag dat altijd.", "Ja, maar alleen buiten de bebouwde kom."] },
-        { type: 'mc', vraagTekst: "Waar of Niet Waar: Als fietser moet je altijd duidelijk je arm uitsteken wanneer je van richting wil veranderen.", antwoord: "Waar", opties: ["Waar", "Niet Waar (dat is niet verplicht)"] },
-        { type: 'mc', vraagTekst: "Jullie fietsen met twee naast elkaar. Er komt ineens een auto in de tegengestelde richting gereden. Wat moet je doen?", antwoord: "We gaan ritsen en rijden achter elkaar tot de auto voorbij is.", opties: ["We gaan ritsen en rijden achter elkaar tot de auto voorbij is.", "We blijven gewoon naast elkaar rijden, auto's moeten wachten.", "We stoppen en stappen af tot de auto weg is."] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: In België is het voor kinderen onder de 12 jaar wettelijk verplicht om een fietshelm te dragen.", antwoord: "Niet Waar (Niet wettelijk verplicht, wel sterk aangeraden)", opties: ["Waar", "Niet Waar (Niet wettelijk verplicht, wel sterk aangeraden)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Een wegkapitein van een grote fietsgroep mag op een kruispunt het verkeer stilleggen met een bordje (C3).", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Zelfs als je in een grote groep fietst, mag je met losse handen fietsen zolang je in het midden fietst.", antwoord: "Niet Waar (Altijd je stuur vasthouden)", opties: ["Waar", "Niet Waar (Altijd je stuur vasthouden)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Muziek luisteren met een koptelefoon is letterlijk verboden op de fiets volgens de wet.", antwoord: "Niet Waar (Maar het is wel gevaarlijk en wordt afgeraden)", opties: ["Waar", "Niet Waar (Maar het is wel gevaarlijk en wordt afgeraden)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Als fietser moet je altijd duidelijk je arm uitsteken wanneer je van richting wil veranderen.", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
         { type: 'mc', vraagTekst: "Waar of Niet Waar: Als je in een groep fietst, mag je gerust de hele breedte van de straat gebruiken zodat auto's niet te hard kunnen rijden.", antwoord: "Niet Waar (Je moet zoveel mogelijk rechts houden).", opties: ["Waar", "Niet Waar (Je moet zoveel mogelijk rechts houden)."] },
+        { type: 'mc', vraagTekst: "Je fietst met je klas in een grote groep. Mogen jullie gezellig met drie naast elkaar fietsen?", antwoord: "Nee, je mag maximaal met twee naast elkaar fietsen.", opties: ["Nee, je mag maximaal met twee naast elkaar fietsen.", "Ja, als de weg breed genoeg is mag dat altijd.", "Ja, maar alleen buiten de bebouwde kom."] },
+        { type: 'mc', vraagTekst: "Jullie fietsen met twee naast elkaar. Er komt ineens een auto in de tegengestelde richting gereden. Wat moet je doen?", antwoord: "We gaan ritsen en rijden achter elkaar tot de auto voorbij is.", opties: ["We gaan ritsen en rijden achter elkaar tot de auto voorbij is.", "We blijven gewoon naast elkaar rijden, auto's moeten wachten.", "We stoppen en stappen af tot de auto weg is."] },
         { type: 'mc', vraagTekst: "Je wil snel een ander liedje opzetten op je gsm terwijl je fietst. Mag dit?", antwoord: "Nee, je gsm vasthouden op de fiets is ten strengste verboden.", opties: ["Nee, je gsm vasthouden op de fiets is ten strengste verboden.", "Ja, zolang je maar met één hand je stuur vasthoudt.", "Ja, maar alleen als je heel traag fietst."] },
         { type: 'mc', vraagTekst: "Er is geen fietspad en jullie wandelen met de fiets aan de hand. Aan welke kant van de weg wandel je best?", antwoord: "Aan de linkerkant (tegen het verkeer in), zo zie je de auto's aankomen.", opties: ["Aan de linkerkant (tegen het verkeer in), zo zie je de auto's aankomen.", "Aan de rechterkant, samen met de auto's.", "In het midden van de weg."] }
       ],
-      // MODULE 4
+      // MODULE 4: Noodsituaties
       [
         { type: 'info', thema: '🧠 Theorie: Noodsituaties', inhoud: theorieM4 },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: De App '112 BE' werkt alleen goed als je verbinding hebt met het internet (3G/4G/5G).", antwoord: "Waar (Voor de automatische GPS locatie is data nodig)", opties: ["Waar (Voor de automatische GPS locatie is data nodig)", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Als er een slachtoffer midden op de straat ligt, is het slim om er met veel mensen omheen te staan om hem warm te houden.", antwoord: "Niet Waar (Zorg eerst voor een veilige zone, waarschuw ander verkeer)", opties: ["Waar", "Niet Waar (Zorg eerst voor een veilige zone, waarschuw ander verkeer)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Bij een bloedneus is het het beste om het hoofd van het slachtoffer ver achterover te buigen.", antwoord: "Niet Waar (Hoofd lichtjes voorover buigen)", opties: ["Waar", "Niet Waar (Hoofd lichtjes voorover buigen)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Je moet altijd je fluohesje aandoen als je pech of een ongeval hebt buiten de bebouwde kom, óók overdag.", antwoord: "Waar", opties: ["Waar", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Iemand heeft net een zware val gemaakt en klaagt over dorst. Je mag hem gerust een grote slok water geven.", antwoord: "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn).", opties: ["Waar", "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn)."] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Je mag een gewonde fietser die op de straat ligt altijd meteen opheffen en naar de stoep sleuren.", antwoord: "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is).", opties: ["Waar", "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is)."] },
         { type: 'mc', vraagTekst: "Je fietst naar school en ziet plots een ongeval gebeuren. Wat is het ALLEREERSTE dat je moet doen?", antwoord: "Zorgen voor je eigen veiligheid (bv. fluohesje aandoen en veilig gaan staan).", opties: ["Zorgen voor je eigen veiligheid (bv. fluohesje aandoen en veilig gaan staan).", "Direct het slachtoffer recht proberen te trekken.", "Verder fietsen, want je bent al laat voor school."] },
         { type: 'mc', vraagTekst: "Welk telefoonnummer bel je als iemand dringend een ziekenwagen nodig heeft?", antwoord: "112", opties: ["112", "101", "100"] },
-        { type: 'mc', vraagTekst: "Waarom is het heel erg handig om in geval van nood te bellen via de App '112 BE'?", antwoord: "Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", opties: ["Omdat de hulpdiensten dan automatisch via GPS kunnen zien waar je exact bent.", "Omdat je met de app gratis belt, en via het gewone nummer moet je betalen.", "Omdat je via de app een videocall kan starten met de dokter."] },
-        { type: 'mc', vraagTekst: "Waar of Niet Waar: Iemand heeft net een zware val gemaakt en klaagt over dorst. Je mag hem gerust een grote slok water geven.", antwoord: "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn).", opties: ["Waar", "Niet Waar (Voor een operatie in het ziekenhuis moet een slachtoffer nuchter zijn)."] },
-        { type: 'mc', vraagTekst: "Je hebt 112 gebeld. Wat is de allerbelangrijkste informatie die de operator moet weten?", antwoord: "Waar je precies bent (straat, gemeente of een herkenningspunt).", opties: ["Waar je precies bent (straat, gemeente of een herkenningspunt).", "Je eigen naam en achternaam.", "Welke kleur fiets het slachtoffer heeft."] },
-        { type: 'mc', vraagTekst: "Waar of Niet Waar: Je mag een gewonde fietser die op de straat ligt altijd meteen opheffen en naar de stoep sleuren.", antwoord: "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is).", opties: ["Waar", "Niet Waar (Je mag een slachtoffer nooit verplaatsen, tenzij er direct levensgevaar zoals brand is)."] },
-        { type: 'mc', vraagTekst: "Een fietser is hard gevallen en klaagt over pijn in zijn nek. Wat doe je?", antwoord: "Nee, laat hem liggen tot de ambulance er is. (Tenzij er brand of levensgevaar is).", opties: ["Nee, laat hem liggen tot de ambulance er is. (Tenzij er brand of levensgevaar is).", "Ja, hij ligt in de weg voor de auto's dus sleep hem direct naar de kant.", "Ja, trek hem recht en laat hem een stukje wandelen."] }
+        { type: 'mc', vraagTekst: "Je hebt 112 gebeld. Wat is de allerbelangrijkste informatie die de operator als eerste moet weten?", antwoord: "Waar je precies bent (straat, gemeente of een herkenningspunt).", opties: ["Waar je precies bent (straat, gemeente of een herkenningspunt).", "Je eigen naam en achternaam.", "Welke kleur fiets het slachtoffer heeft."] },
+        { type: 'mc', vraagTekst: "Een fietser is hard gevallen en klaagt over pijn in zijn nek. Wat doe je?", antwoord: "Laat hem liggen tot de ambulance er is. (Tenzij er direct brand of levensgevaar is).", opties: ["Laat hem liggen tot de ambulance er is. (Tenzij er direct brand of levensgevaar is).", "Hij ligt in de weg, sleep hem direct naar de kant.", "Trek hem recht en laat hem een stukje wandelen."] }
+      ],
+      // MODULE 5: Voorrang & Plaats op de weg
+      [
+        { type: 'info', thema: '🧠 Theorie: Voorrangsregels', inhoud: theorieM5 },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Als jij in België op een rotonde fietst, heb je meestal voorrang op bestuurders die de rotonde willen oprijden.", antwoord: "Waar (Wordt aangeduid met haaientanden en borden)", opties: ["Waar (Wordt aangeduid met haaientanden en borden)", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Een onverharde veldweg (aardeweg) heeft voorrang van rechts op een verharde asfaltweg.", antwoord: "Niet Waar (Een onverharde weg moet altijd voorrang verlenen)", opties: ["Waar", "Niet Waar (Een onverharde weg moet altijd voorrang verlenen)"] },
+        { type: 'mc', vraagTekst: "Waar of Niet Waar: Je mag een andere fietser of een auto nóóit inhalen vlak voor of óp een zebrapad.", antwoord: "Waar (Dit is een zeer zware overtreding)", opties: ["Waar (Dit is een zeer zware overtreding)", "Niet Waar"] },
+        { type: 'mc', vraagTekst: "Je rijdt op een kruispunt zonder borden of lichten. Een auto komt van links. Wie heeft er voorrang?", antwoord: "Jij hebt voorrang, want jij komt van rechts.", opties: ["Jij hebt voorrang, want jij komt van rechts.", "De auto, auto's hebben altijd voorrang op fietsers.", "Diegene die het snelste rijdt."] },
+        { type: 'mc', vraagTekst: "Een auto rijdt achteruit zijn eigen oprit af de straat op. Jij fietst op de straat. Wie mag eerst?", antwoord: "Jij mag eerst (De auto voert een manoeuvre uit en moet voorrang verlenen).", opties: ["Jij mag eerst (De auto voert een manoeuvre uit en moet voorrang verlenen).", "De auto mag eerst, want hij woont daar.", "Degene die van rechts komt."] },
+        { type: 'mc', vraagTekst: "Een tram kruist jouw straat. Er staan geen verkeersborden of lichten. Jij fietst en komt van rechts voor de tram. Wie mag er eerst?", antwoord: "De tram (Een tram heeft altijd absolute voorrang).", opties: ["De tram (Een tram heeft altijd absolute voorrang).", "Jij mag eerst, want je komt van rechts.", "Jij mag eerst, fietsers hebben voorrang op trams."] },
+        { type: 'mc', vraagTekst: "Er nadert een politiewagen met loeiende sirene en zwaailichten achter je. Wat is de regel?", antwoord: "Je moet de weg onmiddellijk vrijmaken, veilig aan de kant gaan en indien nodig stoppen.", opties: ["Je moet de weg onmiddellijk vrijmaken, veilig aan de kant gaan en indien nodig stoppen.", "Je mag gewoon verder fietsen, zij moeten jou maar inhalen.", "Snel nog voor de politiewagen proberen over te steken."] },
+        { type: 'mc', vraagTekst: "Je ziet witte driehoeken (haaientanden) op jouw rijbaan geschilderd vlak voor het kruispunt. Wat doe je?", antwoord: "Je moet voorrang verlenen aan de bestuurders op de kruisende weg.", opties: ["Je moet voorrang verlenen aan de bestuurders op de kruisende weg.", "Je hebt voorrang, je kan gewoon doorrijden.", "Je moet verplicht altijd stoppen, ook als er niemand is."] }
       ]
     ];
 
@@ -292,7 +332,8 @@
       { vlag: '🛑', naam: 'Verkeersborden', header: 'bg-gradient-to-r from-teal-200 to-emerald-300' },
       { vlag: '🚛', naam: 'Dode Hoek', header: 'bg-gradient-to-r from-yellow-200 to-orange-300' },
       { vlag: '🚴‍♂️', naam: 'Fietsers in Groep', header: 'bg-gradient-to-r from-blue-200 to-indigo-300' },
-      { vlag: '🚑', naam: 'Noodsituaties', header: 'bg-gradient-to-r from-purple-200 to-pink-300' }
+      { vlag: '🚑', naam: 'Noodsituaties', header: 'bg-gradient-to-r from-purple-200 to-pink-300' },
+      { vlag: '🚥', naam: 'Voorrangsregels', header: 'bg-gradient-to-r from-lime-200 to-green-300' }
     ];
 
     let state = { 
@@ -385,7 +426,7 @@
         if (state.etappeIndex >= moduleDataConfig.length) { 
             if (state.fouteVragen.length > 0 && !state.isRemediering) {
                 state.isRemediering = true;
-                moduleDataConfig.push({ vlag: '🚑', naam: 'Remediëringsronde', header: 'bg-gradient-to-r from-orange-200 to-rose-300' });
+                moduleDataConfig.push({ vlag: '🔧', naam: 'De Werkplaats', header: 'bg-gradient-to-r from-orange-200 to-rose-300' });
                 state.questionsLijst.push([...state.fouteVragen]);
                 state.totaalVragen += state.fouteVragen.length; 
             } else {
@@ -432,8 +473,8 @@
         eScherm.classList.add('flex');
         
         if (state.isRemediering && state.etappeIndex === moduleDataConfig.length - 1) {
-            document.getElementById('etappe-titel').innerText = "Tijd voor Herhaling!";
-            document.getElementById('etappe-ondertitel').innerText = "We kijken de foutjes nog even samen na.";
+            document.getElementById('etappe-titel').innerText = "De Werkplaats!";
+            document.getElementById('etappe-ondertitel').innerText = "We repareren nog even samen jouw fouten.";
             tussenstandDiv.classList.add('hidden');
         } else {
             document.getElementById('etappe-titel').innerText = state.etappeIndex === 0 ? "Klaar voor de start?" : "Module Voltooid!";
@@ -478,14 +519,28 @@
         fb.innerText = '';
         
         if (vraag.type === 'info') {
-            txtCont.innerHTML = `<span class="text-2xl block mb-2">${vraag.thema}</span>${vraag.inhoud}`;
+            txtCont.innerHTML = `<span class="text-2xl block mb-2 font-black">${vraag.thema}</span>${vraag.inhoud}`;
             btn.innerText = "Begrepen, verder! 🚀";
             btn.className = "flex-grow bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-black py-3 px-6 rounded-xl uppercase tracking-wider text-sm sm:text-base transition-all shadow-md transform hover:scale-[1.02] active:scale-[0.98]";
             btn.disabled = false;
         } else {
-            txtCont.innerHTML = `<strong>Vraag:</strong> ${vraag.vraagTekst}`;
+            // Normale Vragen
+            let qText = vraag.vraagTekst.replace(/<br><img.*?>/g, ""); // Haal foto uit de tekst string
+            let hasImage = vraag.vraagTekst.includes("<img");
+            
+            if(qText.includes("Waar of Niet Waar")) {
+                txtCont.innerHTML = `<strong>Waar of Niet Waar?</strong> 🧐<br><span class="text-slate-600 font-medium">${qText.replace("Waar of Niet Waar: ", "")}</span>`;
+            } else {
+                txtCont.innerHTML = `<strong>Vraag:</strong><br><span class="text-slate-600 font-medium">${qText}</span>`;
+            }
+
+            if (hasImage) {
+                let imgMatch = vraag.vraagTekst.match(/<img.*?>/);
+                if (imgMatch) vCont.innerHTML = imgMatch[0];
+            }
 
             let opties = shuffle([...vraag.opties]);
+            
             opties.forEach(optie => {
                 let btnOptie = document.createElement('button');
                 btnOptie.className = "bg-white border-2 border-slate-200 text-slate-700 font-bold py-3 px-4 rounded-xl text-sm sm:text-base answ-btn-hover transition-all w-full text-left flex items-center justify-between";
@@ -522,7 +577,10 @@
         buttons.forEach(btn => {
             btn.disabled = true;
             btn.classList.remove('answ-btn-hover');
-            if (btn.innerText.trim().startsWith(correcteTekst.substring(0, 15))) { 
+            
+            // Check based on the inner text string match
+            let spanText = btn.querySelector('span:first-child').innerText.trim();
+            if (spanText === correcteTekst) { 
                 btn.classList.replace('border-slate-200', 'border-green-400');
                 btn.classList.add('bg-green-50');
                 btn.querySelector('.icon-feedback').innerText = '✅';
@@ -553,14 +611,21 @@
             if (state.streak === 5) toonStreak("5 op een rij!");
             else if (state.streak === 10) toonStreak("10 op een rij! Onstuitbaar!");
             else if (state.streak === 15) toonStreak("15 op een rij! Mastermind!");
+            else if (state.streak === 25) toonStreak("25 op een rij! Legendarisch!");
 
             autoAdvanceTimeout = setTimeout(volgendeActie, 1500);
         } else {
             state.moduleFouten++;
             state.streak = 0;
-            if(!state.isRemediering) state.fouteVragen.push(vraag);
             
-            fb.innerHTML = `❌ Oeps! Het juiste antwoord was: <strong>${correcteTekst}</strong>`;
+            if(!state.isRemediering) {
+                state.fouteVragen.push(vraag);
+            } else {
+                state.questionsLijst[state.etappeIndex].push(vraag);
+                state.totaalVragen++;
+            }
+            
+            fb.innerHTML = `❌ Oeps! Het antwoord is: <strong>${correcteTekst}</strong>`;
             fb.className = "w-full max-w-2xl p-3 rounded-xl text-center font-bold text-sm sm:text-base mt-2 transition-all relative z-10 bg-red-100 text-red-800 border border-red-300 animate-fade-in-up";
         }
         
